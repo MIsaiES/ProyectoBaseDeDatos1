@@ -63,7 +63,7 @@ namespace Proyecto_Zoologico.Formularios
                 dgvProductos.Columns["FechaModificacion"].HeaderText = "F. Modificación";
                 dgvProductos.Columns["FechaModificacion"].DefaultCellStyle.Format = "dd/MM/yyyy";
                 dgvProductos.Columns["Imagen"].HeaderText = "Imagen"; //Erro al cargar imagen
-
+                
             }
             catch (Exception ex)
             {

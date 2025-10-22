@@ -155,7 +155,7 @@ namespace ProyectoBaseDeDatos1.Forms
                 inventarioDAO.UpdateStock(movimiento);
                 MessageBox.Show("Movimiento agregado exitosamente", "Éxito",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
-                
+
                 LimpiarCampos();
                 CargarMovimientos();
             }

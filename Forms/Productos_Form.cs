@@ -29,41 +29,20 @@ namespace Proyecto_Zoologico.Formularios
             CargarEstados();
             CargarUnidadesMedida();
             CargarUsuarios();
+            CargarCategorias();
         }
 
         private void CargarProductos()
         {
             try
             {
-                if (dgvProductos.DataSource == null)
-                {
-                    return;
-                }
+
                 DataTable dt = productosDAO.ObtenerProductos();
                 dgvProductos.DataSource = dt;
 
-                // Configurar columnas
-                dgvProductos.Columns["ID_Productos"].HeaderText = "ID";
-                dgvProductos.Columns["ID_Productos"].Width = 50;
-                dgvProductos.Columns["SKU"].HeaderText = "SKU";
-                dgvProductos.Columns["SKU"].Width = 100;
-                dgvProductos.Columns["Nombre"].HeaderText = "Nombre";
-                dgvProductos.Columns["Descripcion"].HeaderText = "Descripción";
-                dgvProductos.Columns["TipoProducto"].HeaderText = "Tipo";
-                dgvProductos.Columns["Marca"].HeaderText = "Marca";
-                dgvProductos.Columns["Proveedor"].HeaderText = "Proveedor";
-                dgvProductos.Columns["Estado"].HeaderText = "Estado";
-                dgvProductos.Columns["UnidadMedida"].HeaderText = "U. Medida";
-                dgvProductos.Columns["UsuarioCreador"].HeaderText = "Creador";
-                dgvProductos.Columns["CostoUnitario"].HeaderText = "Costo";
-                dgvProductos.Columns["CostoUnitario"].DefaultCellStyle.Format = "C2";
-                dgvProductos.Columns["Descuento"].HeaderText = "Desc. %";
-                dgvProductos.Columns["FechaCreacion"].HeaderText = "F. Creación";
-                dgvProductos.Columns["FechaCreacion"].DefaultCellStyle.Format = "dd/MM/yyyy";
-                dgvProductos.Columns["FechaModificacion"].HeaderText = "F. Modificación";
-                dgvProductos.Columns["FechaModificacion"].DefaultCellStyle.Format = "dd/MM/yyyy";
-                dgvProductos.Columns["Imagen"].HeaderText = "Imagen"; //Erro al cargar imagen
+                
 
+                
             }
             catch (Exception ex)
             {
@@ -174,6 +153,24 @@ namespace Proyecto_Zoologico.Formularios
             }
         }
 
+        public void CargarCategorias()
+        {
+            try
+            {
+                DataTable dt = productosDAO.ObtenerCategorias();
+
+                cmbCategoria.DataSource = dt;
+                cmbCategoria.DisplayMember = "NombreCategoria";
+                cmbCategoria.ValueMember = "ID_Categorias";
+                cmbCategoria.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar categorías: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             try
@@ -198,7 +195,8 @@ namespace Proyecto_Zoologico.Formularios
                     Prod_FechaCreacion = DateTime.Now,
                     Prod_FechaModificacion = null,
                     Prod_RutaImagen = string.IsNullOrWhiteSpace(rutaImagenSeleccionada) ?
-                        null : System.IO.File.ReadAllBytes(rutaImagenSeleccionada)
+                        null : System.IO.File.ReadAllBytes(rutaImagenSeleccionada),
+                    ID_Categoria =  Convert.ToInt32(cmbCategoria.SelectedValue) 
                 };
 
                 productosDAO.Create(producto);
@@ -247,7 +245,8 @@ namespace Proyecto_Zoologico.Formularios
                     Prod_FechaCreacion = DateTime.Now,
                     Prod_FechaModificacion = DateTime.Now,
                     Prod_RutaImagen = string.IsNullOrEmpty(rutaImagenSeleccionada) ? null :
-                        System.IO.File.ReadAllBytes(rutaImagenSeleccionada)
+                        System.IO.File.ReadAllBytes(rutaImagenSeleccionada),
+                    ID_Categoria = Convert.ToInt32(cmbCategoria.SelectedValue)
                 };
 
                 productosDAO.Update(producto);
@@ -373,12 +372,13 @@ namespace Proyecto_Zoologico.Formularios
                         cmbUsuarioCreador.SelectedValue = productoCompleto.ID_UsuarioCreador;
                         pictureBoxProducto.Image = Image.FromStream(new MemoryStream(productoCompleto.Prod_RutaImagen));
                         pictureBoxProducto.SizeMode = PictureBoxSizeMode.Zoom;
+                        cmbCategoria.SelectedValue = productoCompleto.ID_Categoria;
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error al cargar datos: {ex.Message}", "Error",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //MessageBox.Show($"Error al cargar datos: {ex.Message}", "Error",
+                    //    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

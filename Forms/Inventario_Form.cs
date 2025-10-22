@@ -1,4 +1,5 @@
-﻿using ProyectoBaseDeDatos1.Datos;
+﻿using Proyecto_BasedeDatos1;
+using ProyectoBaseDeDatos1.Datos;
 using ProyectoBaseDeDatos1.Forms;
 using System;
 using System.Collections.Generic;
@@ -27,27 +28,10 @@ namespace Proyecto_Zoologico.Formularios
         {
             try
             {
-                if (dgvInventario.DataSource == null)
-                {
-                    return;
-                }
-                List<Inventario> dt = inventarioDAO.GetAll();
+                DataTable dt = inventarioDAO.GetAll();
                 dgvInventario.DataSource = dt;
 
-                // Configurar columnas
-                dgvInventario.Columns["ID_Inventario"].HeaderText = "ID";
-                dgvInventario.Columns["ID_Inventario"].Width = 50;
-                dgvInventario.Columns["ID_Productos"].Visible = false;
-                dgvInventario.Columns["Producto"].HeaderText = "Producto";
-                dgvInventario.Columns["ID_Bodegas"].Visible = false;
-                dgvInventario.Columns["Bodega"].HeaderText = "Bodega";
-                dgvInventario.Columns["CantidadStock"].HeaderText = "Cantidad Stock";
-                dgvInventario.Columns["PrecioVenta"].HeaderText = "Precio Venta";
-                dgvInventario.Columns["PrecioVenta"].DefaultCellStyle.Format = "C2";
-                dgvInventario.Columns["StockMinimo"].HeaderText = "Stock Mínimo";
-                dgvInventario.Columns["StockMaximo"].HeaderText = "Stock Máximo";
-                dgvInventario.Columns["UltimaActualizacion"].HeaderText = "Última Actualización";
-                dgvInventario.Columns["UltimaActualizacion"].DefaultCellStyle.Format = "dd/MM/yyyy";
+                
             }
             catch (Exception ex)
             {
@@ -62,7 +46,7 @@ namespace Proyecto_Zoologico.Formularios
             {
                 List<Productos> dt = productosDAO.GetAll();
                 cmbProducto.DataSource = dt;
-                cmbProducto.DisplayMember = "NombreProducto";
+                cmbProducto.DisplayMember = "Prod_Nombre";
                 cmbProducto.ValueMember = "ID_Productos";
                 cmbProducto.SelectedIndex = -1;
             }
@@ -125,80 +109,62 @@ namespace Proyecto_Zoologico.Formularios
 
         private void btnActualizar_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    if (selectedInventarioId == 0)
-            //    {
-            //        MessageBox.Show("Seleccione un registro para actualizar", "Advertencia",
-            //            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //        return;
-            //    }
-
-            //    if (!ValidarCampos())
-            //        return;
-
-            //    Inventario inventario = new Inventario
-            //    {
-            //        ID_Inventario = selectedInventarioId,
-            //        ID_Productos = Convert.ToInt32(cmbProducto.SelectedValue),
-            //        ID_Bodegas = inventarioDAO.getIdByName(cmbBodega.Text),
-            //        CantidadStock = Convert.ToDecimal(txtCantidadStock.Text),
-            //        PrecioVenta = Convert.ToDecimal(txtPrecioVenta.Text),
-            //        StockMinimo = Convert.ToDecimal(txtStockMinimo.Text),
-            //        StockMaximo = Convert.ToDecimal(txtStockMaximo.Text),
-            //        UltimaActualizacion = dtpUltimaActualizacion.Value
-            //    };
-
-            //    inventarioDAO.Update(inventario);
-            //    MessageBox.Show("Inventario actualizado exitosamente", "Éxito",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            //    LimpiarCampos();
-            //    CargarInventario();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show($"Error al actualizar inventario: {ex.Message}", "Error",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
-           var form = new Movimientos_Form();
-            form.ShowDialog();
-        }
-
-        private void btnEliminar_Click(object sender, EventArgs e)
-        {
             try
             {
                 if (selectedInventarioId == 0)
                 {
-                    MessageBox.Show("Seleccione un registro para eliminar", "Advertencia",
+                    MessageBox.Show("Seleccione un registro para actualizar", "Advertencia",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                DialogResult result = MessageBox.Show("¿Está seguro de eliminar este registro?",
-                    "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (!ValidarCampos())
+                    return;
 
-                if (result == DialogResult.Yes)
+                Inventario inventario = new Inventario
                 {
-                    inventarioDAO.Delete(selectedInventarioId);
-                    MessageBox.Show("Inventario eliminado exitosamente", "Éxito",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ID_Inventario = selectedInventarioId,
+                    ID_Productos = Convert.ToInt32(cmbProducto.SelectedValue),
+                    ID_Bodegas = inventarioDAO.getIdByName(cmbBodega.Text),
+                    CantidadStock = Convert.ToDecimal(txtCantidadStock.Text),
+                    PrecioVenta = Convert.ToDecimal(txtPrecioVenta.Text),
+                    StockMinimo = Convert.ToDecimal(txtStockMinimo.Text),
+                    StockMaximo = Convert.ToDecimal(txtStockMaximo.Text),
+                    UltimaActualizacion = dtpUltimaActualizacion.Value
+                };
 
-                    LimpiarCampos();
-                    CargarInventario();
-                }
+                inventarioDAO.Update(inventario);
+                MessageBox.Show("Inventario actualizado exitosamente", "Éxito",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                LimpiarCampos();
+                CargarInventario();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al eliminar inventario: {ex.Message}", "Error",
+                MessageBox.Show($"Error al actualizar inventario: {ex.Message}", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            
         }
 
-        private void btnLimpiar_Click(object sender, EventArgs e)
+        private void btnEliminar_Click(object sender, EventArgs e)
         {
-            LimpiarCampos();
+            ReporteInventarioPDF reporte = new ReporteInventarioPDF(ConexionSQL.cadenaConexion);
+            reporte.GenerarReporteInventario();
+            byte[] pdfBytes = reporte.GenerarReporteInventario();
+            DateTime now = DateTime.Now;
+            string hora = now.ToString("yyyyMMdd_HHmmss");
+            string filePath = "C:\\Users\\Administrator\\Desktop\\reportes\\ReporteInventario" + hora + ".pdf";
+            System.IO.File.WriteAllBytes(filePath, pdfBytes);
+            MessageBox.Show($"Reporte de inventario generado en: {filePath}", "Reporte Generado",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnMovimientos_Click(object sender, EventArgs e)
+        {
+            var form = new Movimientos_Form();
+            form.ShowDialog();
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
@@ -221,6 +187,7 @@ namespace Proyecto_Zoologico.Formularios
                 MessageBox.Show($"Error al buscar: {ex.Message}", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            
         }
 
         private void dgvInventario_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -230,12 +197,12 @@ namespace Proyecto_Zoologico.Formularios
                 DataGridViewRow row = dgvInventario.Rows[e.RowIndex];
 
                 selectedInventarioId = Convert.ToInt32(row.Cells["ID_Inventario"].Value);
-                cmbProducto.SelectedValue = Convert.ToInt32(row.Cells["ID_Productos"].Value);
-                cmbBodega.SelectedValue = Convert.ToInt32(row.Cells["ID_Bodegas"].Value);
-                txtCantidadStock.Text = row.Cells["CantidadStock"].Value.ToString();
-                txtPrecioVenta.Text = row.Cells["PrecioVenta"].Value.ToString();
-                txtStockMinimo.Text = row.Cells["StockMinimo"].Value.ToString();
-                txtStockMaximo.Text = row.Cells["StockMaximo"].Value.ToString();
+                cmbProducto.SelectedValue = row.Cells["Producto"].Value;
+                cmbBodega.SelectedValue = row.Cells["Bodega"].Value;
+                txtCantidadStock.Text = row.Cells["Stock"].Value.ToString();
+                txtPrecioVenta.Text = row.Cells["Precio"].Value.ToString();
+                txtStockMinimo.Text = row.Cells["Minimo"].Value.ToString();
+                txtStockMaximo.Text = row.Cells["Maximo"].Value.ToString();
                 dtpUltimaActualizacion.Value = Convert.ToDateTime(row.Cells["UltimaActualizacion"].Value);
             }
         }
@@ -329,5 +296,13 @@ namespace Proyecto_Zoologico.Formularios
             txtBuscar.Clear();
             cmbBuscarPor.SelectedIndex = -1;
         }
+
+        private void btnProducto_Click(object sender, EventArgs e)
+        {
+            var form = new Productos_Form();
+            form.ShowDialog();
+        }
+
+        
     }
 }

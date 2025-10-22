@@ -89,6 +89,8 @@
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.dgvProductos = new System.Windows.Forms.DataGridView();
             this.pictureBoxProducto = new System.Windows.Forms.PictureBox();
+            this.lblCategoria = new System.Windows.Forms.Label();
+            this.cmbCategoria = new System.Windows.Forms.ComboBox();
             this.panelSuperior.SuspendLayout();
             this.gbDatos.SuspendLayout();
             this.gbBusqueda.SuspendLayout();
@@ -120,6 +122,8 @@
             // 
             // gbDatos
             // 
+            this.gbDatos.Controls.Add(this.lblCategoria);
+            this.gbDatos.Controls.Add(this.cmbCategoria);
             this.gbDatos.Controls.Add(this.buttonCargarImagen);
             this.gbDatos.Controls.Add(this.lblSKU);
             this.gbDatos.Controls.Add(this.txtSKU);
@@ -480,12 +484,13 @@
             this.btnEliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEliminar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnEliminar.ForeColor = System.Drawing.Color.White;
-            this.btnEliminar.Location = new System.Drawing.Point(15, 135);
+            this.btnEliminar.Location = new System.Drawing.Point(15, 185);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(170, 35);
             this.btnEliminar.TabIndex = 2;
             this.btnEliminar.Text = "🗑️ Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = false;
+            this.btnEliminar.Visible = false;
             this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // btnLimpiar
@@ -494,7 +499,7 @@
             this.btnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLimpiar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnLimpiar.ForeColor = System.Drawing.Color.White;
-            this.btnLimpiar.Location = new System.Drawing.Point(15, 185);
+            this.btnLimpiar.Location = new System.Drawing.Point(15, 135);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(170, 35);
             this.btnLimpiar.TabIndex = 3;
@@ -526,6 +531,26 @@
             this.pictureBoxProducto.TabIndex = 5;
             this.pictureBoxProducto.TabStop = false;
             // 
+            // lblCategoria
+            // 
+            this.lblCategoria.AutoSize = true;
+            this.lblCategoria.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblCategoria.Location = new System.Drawing.Point(15, 369);
+            this.lblCategoria.Name = "lblCategoria";
+            this.lblCategoria.Size = new System.Drawing.Size(71, 19);
+            this.lblCategoria.TabIndex = 23;
+            this.lblCategoria.Text = "Categoria:";
+            // 
+            // cmbCategoria
+            // 
+            this.cmbCategoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCategoria.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.cmbCategoria.FormattingEnabled = true;
+            this.cmbCategoria.Location = new System.Drawing.Point(15, 389);
+            this.cmbCategoria.Name = "cmbCategoria";
+            this.cmbCategoria.Size = new System.Drawing.Size(250, 25);
+            this.cmbCategoria.TabIndex = 24;
+            // 
             // Productos_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -542,7 +567,7 @@
             this.MaximizeBox = false;
             this.Name = "Productos_Form";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Gestión de Productos - Zoológico";
+            this.Text = "Gestión de Productos";
             this.panelSuperior.ResumeLayout(false);
             this.panelSuperior.PerformLayout();
             this.gbDatos.ResumeLayout(false);
@@ -558,5 +583,7 @@
 
         private System.Windows.Forms.Button buttonCargarImagen;
         private System.Windows.Forms.PictureBox pictureBoxProducto;
+        private System.Windows.Forms.Label lblCategoria;
+        private System.Windows.Forms.ComboBox cmbCategoria;
     }
 }

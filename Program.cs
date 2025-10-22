@@ -18,7 +18,7 @@ namespace ProyectoBaseDeDatos1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Inventario_Form());
+            Application.Run(new Login_Form());
         }
     }
 }

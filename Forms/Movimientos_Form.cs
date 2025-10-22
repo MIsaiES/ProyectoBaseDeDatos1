@@ -14,6 +14,7 @@ namespace ProyectoBaseDeDatos1.Forms
     {
         private MovimientosDAO movimientosDAO;
         private InventarioDAO inventarioDAO;
+        private TiposMovimientoDAO tiposMovimiento;
         private int selectedMovimientoId = 0;
 
         public Movimientos_Form()
@@ -21,6 +22,7 @@ namespace ProyectoBaseDeDatos1.Forms
             InitializeComponent();
             movimientosDAO = new MovimientosDAO();
             inventarioDAO = new InventarioDAO();
+            tiposMovimiento = new TiposMovimientoDAO();
             CargarMovimientos();
             CargarProductos();
             CargarBodegas();
@@ -33,29 +35,10 @@ namespace ProyectoBaseDeDatos1.Forms
         {
             try
             {
-                if (dgvMovimientos.DataSource == null)
-                {
-                    return;
-                }
                 List<Movimientos> dt = movimientosDAO.ObtenerMovimientos();
                 dgvMovimientos.DataSource = dt;
 
-                // Configurar columnas
-                dgvMovimientos.Columns["ID_Movimientos"].HeaderText = "ID";
-                dgvMovimientos.Columns["ID_Movimientos"].Width = 50;
-                dgvMovimientos.Columns["ID_Productos"].Visible = false;
-                dgvMovimientos.Columns["Producto"].HeaderText = "Producto";
-                dgvMovimientos.Columns["ID_Bodegas"].Visible = false;
-                dgvMovimientos.Columns["Bodega"].HeaderText = "Bodega";
-                dgvMovimientos.Columns["ID_TipoMovimiento"].Visible = false;
-                dgvMovimientos.Columns["TipoMovimiento"].HeaderText = "Tipo";
-                dgvMovimientos.Columns["ID_Usuarios"].Visible = false;
-                dgvMovimientos.Columns["Usuario"].HeaderText = "Usuario";
-                dgvMovimientos.Columns["Cantidad"].HeaderText = "Cantidad";
-                dgvMovimientos.Columns["FechaMovimiento"].HeaderText = "Fecha";
-                dgvMovimientos.Columns["FechaMovimiento"].DefaultCellStyle.Format = "dd/MM/yyyy";
-                dgvMovimientos.Columns["Comentario"].HeaderText = "Comentario";
-                dgvMovimientos.Columns["ReferenciaExterna"].HeaderText = "Referencia";
+                
             }
             catch (Exception ex)
             {
@@ -152,10 +135,17 @@ namespace ProyectoBaseDeDatos1.Forms
                 };
 
                 movimientosDAO.Create(movimiento);
-                inventarioDAO.UpdateStock(movimiento);
+                if (tiposMovimiento.GetIdBySign(Convert.ToInt32(movimiento.ID_TipoMovimiento)).Equals("+"))
+                {
+                    inventarioDAO.UpdateStock(movimiento);
+                }
+                if (tiposMovimiento.GetIdBySign(Convert.ToInt32(movimiento.ID_TipoMovimiento)).Equals("-"))
+                {
+                    inventarioDAO.UpdateStockReducction(movimiento);
+                }
                 MessageBox.Show("Movimiento agregado exitosamente", "Éxito",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
-                
+
                 LimpiarCampos();
                 CargarMovimientos();
             }

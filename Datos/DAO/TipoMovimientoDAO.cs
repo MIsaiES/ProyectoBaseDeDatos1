@@ -33,9 +33,9 @@ public class TiposMovimientoDAO
         }
     }
 
-    public TiposMovimiento GetById(int id)
+    public string GetIdBySign(int id)
     {
-        const string sql = "SELECT * FROM Tb_TiposMovimiento WHERE ID_TipoMovimiento = @ID";
+        const string sql = "SELECT SignoMovimiento FROM Tb_TiposMovimiento WHERE ID_TipoMovimiento = @ID";
         using (var connection = new SqlConnection(_connectionString))
         using (var command = new SqlCommand(sql, connection))
         {
@@ -44,9 +44,11 @@ public class TiposMovimientoDAO
             using (var reader = command.ExecuteReader())
             {
                 if (reader.Read())
-                {
+                {  
+                    string signo = reader.GetString(reader.GetOrdinal("SignoMovimiento"));
                     connection.Close();
-                    return MapReader(reader);
+                    return signo;
+                    
                 }
             }
             connection.Close();

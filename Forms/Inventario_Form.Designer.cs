@@ -29,7 +29,7 @@
         private System.Windows.Forms.Button btnAgregar;
         private System.Windows.Forms.Button btnActualizar;
         private System.Windows.Forms.Button btnEliminar;
-        private System.Windows.Forms.Button btnLimpiar;
+        private System.Windows.Forms.Button btnMovimientos;
         private System.Windows.Forms.DataGridView dgvInventario;
 
         protected override void Dispose(bool disposing)
@@ -65,11 +65,12 @@
             this.cmbBuscarPor = new System.Windows.Forms.ComboBox();
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.btnBuscar = new System.Windows.Forms.Button();
+            this.btnProducto = new System.Windows.Forms.Button();
             this.gbAcciones = new System.Windows.Forms.GroupBox();
             this.btnAgregar = new System.Windows.Forms.Button();
-            this.btnActualizar = new System.Windows.Forms.Button();
             this.btnEliminar = new System.Windows.Forms.Button();
-            this.btnLimpiar = new System.Windows.Forms.Button();
+            this.btnMovimientos = new System.Windows.Forms.Button();
+            this.btnActualizar = new System.Windows.Forms.Button();
             this.dgvInventario = new System.Windows.Forms.DataGridView();
             this.panelSuperior.SuspendLayout();
             this.gbDatos.SuspendLayout();
@@ -95,7 +96,7 @@
             this.lblTitulo.ForeColor = System.Drawing.Color.White;
             this.lblTitulo.Location = new System.Drawing.Point(12, 14);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(295, 37);
+            this.lblTitulo.Size = new System.Drawing.Size(294, 37);
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "Gestión de Inventario";
             // 
@@ -129,7 +130,7 @@
             this.lblProducto.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblProducto.Location = new System.Drawing.Point(15, 30);
             this.lblProducto.Name = "lblProducto";
-            this.lblProducto.Size = new System.Drawing.Size(65, 19);
+            this.lblProducto.Size = new System.Drawing.Size(68, 19);
             this.lblProducto.TabIndex = 0;
             this.lblProducto.Text = "Producto:";
             // 
@@ -149,7 +150,7 @@
             this.lblBodega.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblBodega.Location = new System.Drawing.Point(285, 30);
             this.lblBodega.Name = "lblBodega";
-            this.lblBodega.Size = new System.Drawing.Size(57, 19);
+            this.lblBodega.Size = new System.Drawing.Size(58, 19);
             this.lblBodega.TabIndex = 2;
             this.lblBodega.Text = "Bodega:";
             // 
@@ -169,7 +170,7 @@
             this.lblCantidadStock.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblCantidadStock.Location = new System.Drawing.Point(15, 90);
             this.lblCantidadStock.Name = "lblCantidadStock";
-            this.lblCantidadStock.Size = new System.Drawing.Size(106, 19);
+            this.lblCantidadStock.Size = new System.Drawing.Size(104, 19);
             this.lblCantidadStock.TabIndex = 4;
             this.lblCantidadStock.Text = "Cantidad Stock:";
             // 
@@ -187,7 +188,7 @@
             this.lblPrecioVenta.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblPrecioVenta.Location = new System.Drawing.Point(285, 90);
             this.lblPrecioVenta.Name = "lblPrecioVenta";
-            this.lblPrecioVenta.Size = new System.Drawing.Size(83, 19);
+            this.lblPrecioVenta.Size = new System.Drawing.Size(88, 19);
             this.lblPrecioVenta.TabIndex = 6;
             this.lblPrecioVenta.Text = "Precio Venta:";
             // 
@@ -205,7 +206,7 @@
             this.lblStockMinimo.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblStockMinimo.Location = new System.Drawing.Point(15, 150);
             this.lblStockMinimo.Name = "lblStockMinimo";
-            this.lblStockMinimo.Size = new System.Drawing.Size(95, 19);
+            this.lblStockMinimo.Size = new System.Drawing.Size(96, 19);
             this.lblStockMinimo.TabIndex = 8;
             this.lblStockMinimo.Text = "Stock Mínimo:";
             // 
@@ -223,7 +224,7 @@
             this.lblStockMaximo.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblStockMaximo.Location = new System.Drawing.Point(285, 150);
             this.lblStockMaximo.Name = "lblStockMaximo";
-            this.lblStockMaximo.Size = new System.Drawing.Size(97, 19);
+            this.lblStockMaximo.Size = new System.Drawing.Size(98, 19);
             this.lblStockMaximo.TabIndex = 10;
             this.lblStockMaximo.Text = "Stock Máximo:";
             // 
@@ -241,7 +242,7 @@
             this.lblUltimaActualizacion.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblUltimaActualizacion.Location = new System.Drawing.Point(15, 210);
             this.lblUltimaActualizacion.Name = "lblUltimaActualizacion";
-            this.lblUltimaActualizacion.Size = new System.Drawing.Size(136, 19);
+            this.lblUltimaActualizacion.Size = new System.Drawing.Size(135, 19);
             this.lblUltimaActualizacion.TabIndex = 12;
             this.lblUltimaActualizacion.Text = "Última Actualización:";
             // 
@@ -314,12 +315,27 @@
             this.btnBuscar.UseVisualStyleBackColor = false;
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
+            // btnProducto
+            // 
+            this.btnProducto.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.btnProducto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnProducto.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnProducto.ForeColor = System.Drawing.Color.White;
+            this.btnProducto.Location = new System.Drawing.Point(15, 134);
+            this.btnProducto.Name = "btnProducto";
+            this.btnProducto.Size = new System.Drawing.Size(250, 35);
+            this.btnProducto.TabIndex = 4;
+            this.btnProducto.Text = "➕ Agregar Producto";
+            this.btnProducto.UseVisualStyleBackColor = false;
+            this.btnProducto.Click += new System.EventHandler(this.btnProducto_Click);
+            // 
             // gbAcciones
             // 
+            this.gbAcciones.Controls.Add(this.btnProducto);
             this.gbAcciones.Controls.Add(this.btnAgregar);
-            this.gbAcciones.Controls.Add(this.btnActualizar);
             this.gbAcciones.Controls.Add(this.btnEliminar);
-            this.gbAcciones.Controls.Add(this.btnLimpiar);
+            this.gbAcciones.Controls.Add(this.btnMovimientos);
+            this.gbAcciones.Controls.Add(this.btnActualizar);
             this.gbAcciones.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.gbAcciones.Location = new System.Drawing.Point(900, 80);
             this.gbAcciones.Name = "gbAcciones";
@@ -342,6 +358,34 @@
             this.btnAgregar.UseVisualStyleBackColor = false;
             this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
+            // btnEliminar
+            // 
+            this.btnEliminar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
+            this.btnEliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEliminar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnEliminar.ForeColor = System.Drawing.Color.White;
+            this.btnEliminar.Location = new System.Drawing.Point(15, 239);
+            this.btnEliminar.Name = "btnEliminar";
+            this.btnEliminar.Size = new System.Drawing.Size(250, 35);
+            this.btnEliminar.TabIndex = 2;
+            this.btnEliminar.Text = "GENERAR REPORTE";
+            this.btnEliminar.UseVisualStyleBackColor = false;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
+            // 
+            // btnMovimientos
+            // 
+            this.btnMovimientos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(165)))), ((int)(((byte)(166)))));
+            this.btnMovimientos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMovimientos.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnMovimientos.ForeColor = System.Drawing.Color.White;
+            this.btnMovimientos.Location = new System.Drawing.Point(15, 184);
+            this.btnMovimientos.Name = "btnMovimientos";
+            this.btnMovimientos.Size = new System.Drawing.Size(250, 35);
+            this.btnMovimientos.TabIndex = 3;
+            this.btnMovimientos.Text = "🔄 Movimientos";
+            this.btnMovimientos.UseVisualStyleBackColor = false;
+            this.btnMovimientos.Click += new System.EventHandler(this.btnMovimientos_Click);
+            // 
             // btnActualizar
             // 
             this.btnActualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(196)))), ((int)(((byte)(15)))));
@@ -355,34 +399,6 @@
             this.btnActualizar.Text = "✏️ Actualizar";
             this.btnActualizar.UseVisualStyleBackColor = false;
             this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
-            // 
-            // btnEliminar
-            // 
-            this.btnEliminar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
-            this.btnEliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEliminar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnEliminar.ForeColor = System.Drawing.Color.White;
-            this.btnEliminar.Location = new System.Drawing.Point(15, 135);
-            this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.Size = new System.Drawing.Size(250, 35);
-            this.btnEliminar.TabIndex = 2;
-            this.btnEliminar.Text = "🗑️ Eliminar";
-            this.btnEliminar.UseVisualStyleBackColor = false;
-            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
-            // 
-            // btnLimpiar
-            // 
-            this.btnLimpiar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(165)))), ((int)(((byte)(166)))));
-            this.btnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLimpiar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnLimpiar.ForeColor = System.Drawing.Color.White;
-            this.btnLimpiar.Location = new System.Drawing.Point(15, 185);
-            this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(250, 35);
-            this.btnLimpiar.TabIndex = 3;
-            this.btnLimpiar.Text = "🔄 Limpiar";
-            this.btnLimpiar.UseVisualStyleBackColor = false;
-            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
             // dgvInventario
             // 
@@ -415,7 +431,7 @@
             this.MaximizeBox = false;
             this.Name = "Inventario_Form";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Gestión de Inventario - Zoológico";
+            this.Text = "Gestión de Inventario";
             this.panelSuperior.ResumeLayout(false);
             this.panelSuperior.PerformLayout();
             this.gbDatos.ResumeLayout(false);
@@ -425,6 +441,9 @@
             this.gbAcciones.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvInventario)).EndInit();
             this.ResumeLayout(false);
+
         }
+
+        private System.Windows.Forms.Button btnProducto;
     }
 }

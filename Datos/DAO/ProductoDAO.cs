@@ -17,10 +17,10 @@ public class ProductosDAO
         const string sql = @"
                 INSERT INTO Tb_Productos (ID_TipoProducto, ID_Marca, ID_Proveedor, ID_ProductoEstado, ID_UniMed, ID_UsuarioCreador,
                                           Prod_SKU, Prod_Nombre, Prod_Descripcion, Prod_CostoUnitario, Prod_PorcentajeDescuentod,
-                                          Prod_RutaImagen, Prod_FechaCreacion, Prod_FechaModificacion)
+                                          Prod_RutaImagen, Prod_FechaCreacion, Prod_FechaModificacion, ID_Categoria)
                 VALUES (@ID_TipoProducto, @ID_Marca, @ID_Proveedor, @ID_ProductoEstado, @ID_UniMed, @ID_UsuarioCreador,
                         @Prod_SKU, @Prod_Nombre, @Prod_Descripcion, @Prod_CostoUnitario, @Prod_PorcentajeDescuentod,
-                        @Prod_RutaImagen, @Prod_FechaCreacion, @Prod_FechaModificacion);
+                        @Prod_RutaImagen, @Prod_FechaCreacion, @Prod_FechaModificacion, @ID_Categoria);
                 SELECT SCOPE_IDENTITY();";
 
         using (var connection = new SqlConnection(_connectionString))
@@ -45,6 +45,7 @@ public class ProductosDAO
             command.Parameters.AddWithValue("@Prod_RutaImagen", producto.Prod_RutaImagen ?? (object)DBNull.Value);
             command.Parameters.AddWithValue("@Prod_FechaCreacion", producto.Prod_FechaCreacion);
             command.Parameters.AddWithValue("@Prod_FechaModificacion", producto.Prod_FechaModificacion ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@ID_Categoria", producto.ID_Categoria);
 
             connection.Open();
             command.ExecuteNonQuery();
@@ -102,7 +103,7 @@ public class ProductosDAO
                     Prod_SKU = @Prod_SKU, Prod_Nombre = @Prod_Nombre, Prod_Descripcion = @Prod_Descripcion,
                     Prod_CostoUnitario = @Prod_CostoUnitario, Prod_PorcentajeDescuentod = @Prod_PorcentajeDescuentod,
                     Prod_RutaImagen = @Prod_RutaImagen, Prod_FechaCreacion = @Prod_FechaCreacion,
-                    Prod_FechaModificacion = @Prod_FechaModificacion
+                    Prod_FechaModificacion = @Prod_FechaModificacion, ID_Categoria = @ID_Categoria
                 WHERE ID_Productos = @ID";
 
         using (var connection = new SqlConnection(_connectionString))
@@ -128,6 +129,7 @@ public class ProductosDAO
             command.Parameters.AddWithValue("@Prod_RutaImagen", producto.Prod_RutaImagen ?? (object)DBNull.Value);
             command.Parameters.AddWithValue("@Prod_FechaCreacion", producto.Prod_FechaCreacion);
             command.Parameters.AddWithValue("@Prod_FechaModificacion", producto.Prod_FechaModificacion ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@ID_Categoria", producto.ID_Categoria);
 
             connection.Open();
             command.ExecuteNonQuery();
@@ -165,7 +167,8 @@ public class ProductosDAO
                 p.Prod_CostoUnitario AS CostoUnitario,
                 p.Prod_PorcentajeDescuentod AS Descuento,
                 p.Prod_FechaCreacion AS FechaCreacion,
-                p.Prod_FechaModificacion AS FechaModificacion
+                p.Prod_FechaModificacion AS FechaModificacion,
+                c.NombreCategoria AS Categoria
             FROM Tb_Productos p
             INNER JOIN Tb_ProdTiposProductos tp ON p.ID_TipoProducto = tp.ID_TipoProducto
             INNER JOIN Tb_ProdMarcas m ON p.ID_Marca = m.ID_Marca
@@ -173,6 +176,7 @@ public class ProductosDAO
             INNER JOIN Tb_ProdEstados pe ON p.ID_ProductoEstado = pe.ID_ProductoEstado
             INNER JOIN Tb_UnidadesMedida um ON p.ID_UniMed = um.ID_UniMed
             INNER JOIN Tb_Usuarios u ON p.ID_UsuarioCreador = u.ID_Usuarios
+            INNER JOIN Tb_Categorias c ON p.ID_Categoria = c.ID_Categorias
             ORDER BY p.Prod_Nombre";
 
         using (var connection = new SqlConnection(_connectionString))
@@ -203,7 +207,8 @@ public class ProductosDAO
                 p.Prod_PorcentajeDescuentod AS Descuento,
                 p.Prod_FechaCreacion AS FechaCreacion,
                 p.Prod_FechaModificacion AS FechaModificacion,
-                p.Prod_RutaImagen AS Imagen
+                p.Prod_RutaImagen AS Imagen,
+                c.NombreCategoria AS Categoria
             FROM Tb_Productos p
             INNER JOIN Tb_ProdTiposProductos tp ON p.ID_TipoProducto = tp.ID_TipoProducto
             INNER JOIN Tb_ProdMarcas m ON p.ID_Marca = m.ID_Marca
@@ -211,6 +216,7 @@ public class ProductosDAO
             INNER JOIN Tb_ProdEstados pe ON p.ID_ProductoEstado = pe.ID_ProductoEstado
             INNER JOIN Tb_UnidadesMedida um ON p.ID_UniMed = um.ID_UniMed
             INNER JOIN Tb_Usuarios u ON p.ID_UsuarioCreador = u.ID_Usuarios
+            INNER JOIN Tb_Categorias c ON p.ID_Categoria = c.ID_Categorias
             WHERE p.{campo} LIKE @Valor";
 
         using (var connection = new SqlConnection(_connectionString))
@@ -308,6 +314,20 @@ public class ProductosDAO
         }
     }
 
+    public DataTable ObtenerCategorias()
+    {
+        string query = "SELECT ID_Categorias, NombreCategoria FROM Tb_Categorias ORDER BY NombreCategoria";
+        
+        using (var connection = new SqlConnection(_connectionString))
+        {
+            connection.Open();
+            SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+            return dt;
+        }
+    }
+
     private static Productos MapReader(SqlDataReader reader)
     {
         return new Productos
@@ -319,6 +339,7 @@ public class ProductosDAO
             ID_ProductoEstado = reader.GetInt32(reader.GetOrdinal("ID_ProductoEstado")),
             ID_UniMed = reader.GetInt32(reader.GetOrdinal("ID_UniMed")),
             ID_UsuarioCreador = reader.GetInt32(reader.GetOrdinal("ID_UsuarioCreador")),
+            ID_Categoria = reader.GetInt32(reader.GetOrdinal("ID_Categoria")),
             Prod_SKU = reader.GetString(reader.GetOrdinal("Prod_SKU")),
             Prod_Nombre = reader.GetString(reader.GetOrdinal("Prod_Nombre")),
             Prod_Descripcion = reader.GetString(reader.GetOrdinal("Prod_Descripcion")),

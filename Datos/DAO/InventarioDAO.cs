@@ -1,8 +1,11 @@
-﻿using ProyectoBaseDeDatos1.Datos;
+﻿using iText.StyledXmlParser.Jsoup.Select;
+using ProyectoBaseDeDatos1.Datos;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -57,23 +60,40 @@ public class InventarioDAO
         return null;
     }
 
-    public List<Inventario> GetAll()
+    public DataTable GetAll()
     {
-        const string sql = "SELECT * FROM Tb_Inventario";
-        List<Inventario> inventarios = new List<Inventario>();
+        const string sql =
+@"Select
+
+    i.ID_Inventario as ID_Inventario,
+    p.Prod_Nombre as Producto,
+    b.Bdg_Nombre as Bodega,
+    i.CantidadStock as Stock,
+    i.PrecioVenta as Precio,
+    i.StockMinimo as Minimo,
+    i.StockMaximo as Maximo,
+   	i.UltimaActualizacion as UltimaActualizacion
+
+
+from
+
+    Tb_Inventario as i
+
+    inner join Tb_Bodegas as b
+    on b.ID_Bodegas = i.ID_Bodegas
+    inner join Tb_Productos as p
+    on p.ID_Productos = i.ID_Productos";
+
+
+
         using (var connection = new SqlConnection(_connectionString))
-        using (var command = new SqlCommand(sql, connection))
         {
             connection.Open();
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    inventarios.Add(MapReader(reader));
-                }
-            }
+            SqlDataAdapter adapter = new SqlDataAdapter(sql, connection);
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+            return dt;
         }
-        return inventarios;
     }
 
     public void Update(Inventario inventario)
@@ -109,6 +129,27 @@ public class InventarioDAO
         const string sql = @"
                 UPDATE Tb_Inventario 
                 SET CantidadStock = CantidadStock + @CantidadMovimiento,
+                    UltimaActualizacion = @UltimaActualizacion,
+                    ID_Bodegas = @ID_Bodegas
+                WHERE ID_Productos = @ID_Productos";
+        using (var connection = new SqlConnection(_connectionString))
+        using (var command = new SqlCommand(sql, connection))
+        {
+            command.Parameters.AddWithValue("@CantidadMovimiento", movimientos.Cantidad);
+            command.Parameters.AddWithValue("@UltimaActualizacion", movimientos.FechaMovimiento);
+            command.Parameters.AddWithValue("@ID_Bodegas", movimientos.ID_Bodegas);
+            command.Parameters.AddWithValue("@ID_Productos", movimientos.ID_Productos);
+            connection.Open();
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
+    }
+
+    public void UpdateStockReducction(Movimientos movimientos)
+    {
+        const string sql = @"
+                UPDATE Tb_Inventario 
+                SET CantidadStock = CantidadStock - @CantidadMovimiento,
                     UltimaActualizacion = @UltimaActualizacion,
                     ID_Bodegas = @ID_Bodegas
                 WHERE ID_Productos = @ID_Productos";

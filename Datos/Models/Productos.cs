@@ -21,4 +21,5 @@ public class Productos
     public byte[] Prod_RutaImagen { get; set; }
     public DateTime Prod_FechaCreacion { get; set; }
     public DateTime? Prod_FechaModificacion { get; set; }
+    public int ID_Categoria { get; set; }
 }

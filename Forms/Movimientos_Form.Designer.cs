@@ -91,7 +91,7 @@
             this.lblTitulo.ForeColor = System.Drawing.Color.White;
             this.lblTitulo.Location = new System.Drawing.Point(12, 14);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(321, 37);
+            this.lblTitulo.Size = new System.Drawing.Size(331, 37);
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "Gestión de Movimientos";
             // 
@@ -127,7 +127,7 @@
             this.lblProducto.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblProducto.Location = new System.Drawing.Point(15, 30);
             this.lblProducto.Name = "lblProducto";
-            this.lblProducto.Size = new System.Drawing.Size(65, 19);
+            this.lblProducto.Size = new System.Drawing.Size(68, 19);
             this.lblProducto.TabIndex = 0;
             this.lblProducto.Text = "Producto:";
             // 
@@ -147,7 +147,7 @@
             this.lblBodega.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblBodega.Location = new System.Drawing.Point(285, 30);
             this.lblBodega.Name = "lblBodega";
-            this.lblBodega.Size = new System.Drawing.Size(57, 19);
+            this.lblBodega.Size = new System.Drawing.Size(58, 19);
             this.lblBodega.TabIndex = 2;
             this.lblBodega.Text = "Bodega:";
             // 
@@ -167,7 +167,7 @@
             this.lblTipoMovimiento.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblTipoMovimiento.Location = new System.Drawing.Point(15, 90);
             this.lblTipoMovimiento.Name = "lblTipoMovimiento";
-            this.lblTipoMovimiento.Size = new System.Drawing.Size(118, 19);
+            this.lblTipoMovimiento.Size = new System.Drawing.Size(116, 19);
             this.lblTipoMovimiento.TabIndex = 4;
             this.lblTipoMovimiento.Text = "Tipo Movimiento:";
             // 
@@ -187,7 +187,7 @@
             this.lblUsuario.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblUsuario.Location = new System.Drawing.Point(285, 90);
             this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Size = new System.Drawing.Size(57, 19);
+            this.lblUsuario.Size = new System.Drawing.Size(59, 19);
             this.lblUsuario.TabIndex = 6;
             this.lblUsuario.Text = "Usuario:";
             // 
@@ -207,7 +207,7 @@
             this.lblCantidad.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblCantidad.Location = new System.Drawing.Point(15, 150);
             this.lblCantidad.Name = "lblCantidad";
-            this.lblCantidad.Size = new System.Drawing.Size(66, 19);
+            this.lblCantidad.Size = new System.Drawing.Size(67, 19);
             this.lblCantidad.TabIndex = 8;
             this.lblCantidad.Text = "Cantidad:";
             // 
@@ -225,7 +225,7 @@
             this.lblFechaMovimiento.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblFechaMovimiento.Location = new System.Drawing.Point(285, 150);
             this.lblFechaMovimiento.Name = "lblFechaMovimiento";
-            this.lblFechaMovimiento.Size = new System.Drawing.Size(124, 19);
+            this.lblFechaMovimiento.Size = new System.Drawing.Size(125, 19);
             this.lblFechaMovimiento.TabIndex = 10;
             this.lblFechaMovimiento.Text = "Fecha Movimiento:";
             // 
@@ -244,7 +244,7 @@
             this.lblComentario.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblComentario.Location = new System.Drawing.Point(15, 210);
             this.lblComentario.Name = "lblComentario";
-            this.lblComentario.Size = new System.Drawing.Size(81, 19);
+            this.lblComentario.Size = new System.Drawing.Size(84, 19);
             this.lblComentario.TabIndex = 12;
             this.lblComentario.Text = "Comentario:";
             // 
@@ -263,7 +263,7 @@
             this.lblReferenciaExterna.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblReferenciaExterna.Location = new System.Drawing.Point(15, 295);
             this.lblReferenciaExterna.Name = "lblReferenciaExterna";
-            this.lblReferenciaExterna.Size = new System.Drawing.Size(125, 19);
+            this.lblReferenciaExterna.Size = new System.Drawing.Size(123, 19);
             this.lblReferenciaExterna.TabIndex = 14;
             this.lblReferenciaExterna.Text = "Referencia Externa:";
             // 
@@ -375,6 +375,7 @@
             this.btnActualizar.TabIndex = 1;
             this.btnActualizar.Text = "✏️ Actualizar";
             this.btnActualizar.UseVisualStyleBackColor = false;
+            this.btnActualizar.Visible = false;
             this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
             // 
             // btnEliminar
@@ -383,12 +384,13 @@
             this.btnEliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEliminar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnEliminar.ForeColor = System.Drawing.Color.White;
-            this.btnEliminar.Location = new System.Drawing.Point(15, 135);
+            this.btnEliminar.Location = new System.Drawing.Point(15, 194);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(250, 35);
             this.btnEliminar.TabIndex = 2;
             this.btnEliminar.Text = "🗑️ Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = false;
+            this.btnEliminar.Visible = false;
             this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // btnLimpiar
@@ -397,7 +399,7 @@
             this.btnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLimpiar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnLimpiar.ForeColor = System.Drawing.Color.White;
-            this.btnLimpiar.Location = new System.Drawing.Point(15, 185);
+            this.btnLimpiar.Location = new System.Drawing.Point(15, 141);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(250, 35);
             this.btnLimpiar.TabIndex = 3;
@@ -436,7 +438,7 @@
             this.MaximizeBox = false;
             this.Name = "Movimientos_Form";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Gestión de Movimientos - Zoológico";
+            this.Text = "Gestión de Movimientos";
             this.panelSuperior.ResumeLayout(false);
             this.panelSuperior.PerformLayout();
             this.gbDatos.ResumeLayout(false);
@@ -446,6 +448,7 @@
             this.gbAcciones.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMovimientos)).EndInit();
             this.ResumeLayout(false);
+
         }
     }
 }

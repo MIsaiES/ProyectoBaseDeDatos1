@@ -8,7 +8,9 @@ namespace ProyectoBaseDeDatos1.Datos
 {
     internal class ConexionSQL
     {
-        public static readonly string cadenaConexion =
-            "server=ISAIESQUIVEL;database=db_SistemaInventario;user=sa;password=Mdi9382";
+        public static string cadenaConexion;
+
+        
     }
+    //server = ISAIESQUIVEL; database = db_SistemaInventario; user = sa; password = Mdi9382
 }

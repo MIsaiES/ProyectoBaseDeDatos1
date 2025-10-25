@@ -43,6 +43,11 @@ namespace Proyecto_Zoologico.Formularios
                 
 
                 
+                
+=========
+                dgvProductos.Columns["Imagen"].HeaderText = "Imagen"; //Erro al cargar imagen
+
+>>>>>>>>> Temporary merge branch 2
             }
             catch (Exception ex)
             {
